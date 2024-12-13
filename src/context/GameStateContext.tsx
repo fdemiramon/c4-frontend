@@ -1,7 +1,13 @@
-import { createContext, useContext, useEffect, useState, useCallback } from 'react';
-import { Game } from '../types/contract';
-import { fetchAllBoards } from '../utils/contractInteractions';
-import { toast } from 'react-hot-toast';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+} from "react";
+import { Game } from "../types/contract";
+import { fetchAllBoards } from "../utils/contractInteractions";
+import { toast } from "react-hot-toast";
 
 interface GameStateContextType {
   games: Game[];
@@ -10,7 +16,9 @@ interface GameStateContextType {
   refreshGames: () => Promise<void>;
 }
 
-const GameStateContext = createContext<GameStateContextType | undefined>(undefined);
+const GameStateContext = createContext<GameStateContextType | undefined>(
+  undefined
+);
 
 export function GameStateProvider({ children }: { children: React.ReactNode }) {
   const [games, setGames] = useState<Game[]>([]);
@@ -24,7 +32,8 @@ export function GameStateProvider({ children }: { children: React.ReactNode }) {
       setGames(boards);
       setError(null);
     } catch (err) {
-      const error = err instanceof Error ? err : new Error('Failed to fetch games');
+      const error =
+        err instanceof Error ? err : new Error("Failed to fetch games");
       setError(error);
       toast.error(error.message);
     } finally {
@@ -37,12 +46,12 @@ export function GameStateProvider({ children }: { children: React.ReactNode }) {
   }, [fetchGames]);
 
   return (
-    <GameStateContext.Provider 
-      value={{ 
-        games, 
-        loading, 
-        error, 
-        refreshGames: fetchGames 
+    <GameStateContext.Provider
+      value={{
+        games,
+        loading,
+        error,
+        refreshGames: fetchGames,
       }}
     >
       {children}
@@ -53,7 +62,7 @@ export function GameStateProvider({ children }: { children: React.ReactNode }) {
 export function useGameState() {
   const context = useContext(GameStateContext);
   if (context === undefined) {
-    throw new Error('useGameState must be used within a GameStateProvider');
+    throw new Error("useGameState must be used within a GameStateProvider");
   }
   return context;
 }

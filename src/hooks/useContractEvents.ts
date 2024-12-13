@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "react-hot-toast";
-import { createProvider } from "../config/contract";
+import { createProvider } from "../config/provider";
 import { useBlockNumber } from "./useBlockNumber";
 import { getEvents } from "../utils/rawEventsPolling";
 
@@ -9,7 +9,9 @@ const provider = createProvider();
 
 export function useContractEvents<GameEvent>(boardIndex: number) {
   const { blockNumber } = useBlockNumber();
-  const [lastProcessedBlock, setLastProcessedBlock] = useState<number | null>(null);
+  const [lastProcessedBlock, setLastProcessedBlock] = useState<number | null>(
+    null
+  );
   const [gameEvent, setGameEvent] = useState<GameEvent | null>(null);
 
   const processNewEvents = useCallback(
@@ -17,7 +19,7 @@ export function useContractEvents<GameEvent>(boardIndex: number) {
       try {
         const rawEvents = await getEvents(provider, fromBlock, toBlock);
         console.log(`Fetching from Block ${fromBlock} to ${toBlock}`);
-        
+
         for (const rawEvent of rawEvents) {
           const event = {
             name: rawEvent.name,
@@ -25,7 +27,7 @@ export function useContractEvents<GameEvent>(boardIndex: number) {
             gameIndex: parseInt(rawEvent.args.gameIndex),
             data: rawEvent.args,
           };
-          
+
           if (event.boardIndex === boardIndex) {
             toast.success(
               `Game #${event.gameIndex} / Board #${event.boardIndex}: ${event.name}`

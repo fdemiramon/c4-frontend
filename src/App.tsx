@@ -1,7 +1,7 @@
 import { Activity } from "lucide-react";
 import { Toaster } from "react-hot-toast";
 import { Boards } from "./components/Boards";
-import { CURRENT_NETWORK } from "./config/contract";
+import { CURRENT_NETWORK } from "./config/provider";
 
 function App() {
   return (

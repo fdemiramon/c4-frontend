@@ -3,19 +3,25 @@ import React, { useState } from "react";
 interface CellProps {
   value: boolean;
   address: string;
+  isAnimating?: boolean;
 }
 
-export const BoardCell: React.FC<CellProps> = ({ value, address }) => {
+export const BoardCell: React.FC<CellProps> = ({
+  value,
+  address,
+  isAnimating,
+}) => {
   const [showTooltip, setShowTooltip] = useState(false);
 
-  const cellColor = value ? "bg-red-500" : "bg-yellow-500";
+  const cellColor = value ? "bg-red-500" : "bg-blue-500";
+  const animationClass = isAnimating ? "animate-fall" : "";
 
   return (
     <div className="p-1 relative">
       <div
         className={`w-12 h-12 rounded-full border-4 border-blue-700 ${
-          value ? cellColor : "bg-white"
-        }
+          value !== null ? cellColor : "bg-white"
+        } ${animationClass}
           transition-colors duration-200 cursor-pointer`}
         onMouseEnter={() => address && setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}

@@ -1,7 +1,10 @@
-import { ethers } from "ethers";
+// Get contract address from environment variable
+export const CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS;
 
-// Contract configuration
-export const CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3"; // Example address
+if (!CONTRACT_ADDRESS) {
+  throw new Error("Contract address not found in environment variables");
+}
+
 export const CONTRACT_ABI = [
   {
     type: "constructor",
@@ -480,11 +483,3 @@ export const NETWORK_CONFIG = {
     rpcUrl: "https://anvil.idm.io",
   },
 } as const;
-
-// Default to Sepolia testnet
-export const CURRENT_NETWORK = NETWORK_CONFIG.dev;
-
-// Create provider instance
-export const createProvider = () => {
-  return new ethers.JsonRpcProvider(CURRENT_NETWORK.rpcUrl);
-};

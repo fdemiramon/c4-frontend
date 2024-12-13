@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { createProvider } from "../config/contract";
+import { createProvider } from "../config/provider";
 
 const POLLING_INTERVAL = 1000; // 1 second
 
