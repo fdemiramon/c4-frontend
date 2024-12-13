@@ -475,10 +475,14 @@ export const NETWORK_CONFIG = {
     name: "Local anvil",
     rpcUrl: "http://localhost:8545",
   },
+  dev: {
+    name: "Remote anvil",
+    rpcUrl: "https://anvil.idm.io",
+  },
 } as const;
 
 // Default to Sepolia testnet
-export const CURRENT_NETWORK = NETWORK_CONFIG.local;
+export const CURRENT_NETWORK = NETWORK_CONFIG.dev;
 
 // Create provider instance
 export const createProvider = () => {

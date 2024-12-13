@@ -4,14 +4,12 @@ import { createProvider } from "../config/contract";
 import { useBlockNumber } from "./useBlockNumber";
 import { getEvents } from "../utils/rawEventsPolling";
 
-const BLOCKS_TO_FETCH = 10; // Number of blocks to look back
+const BLOCKS_TO_FETCH = 10;
 const provider = createProvider();
 
 export function useContractEvents<GameEvent>(boardIndex: number) {
   const { blockNumber } = useBlockNumber();
-  const [lastProcessedBlock, setLastProcessedBlock] = useState<number | null>(
-    null
-  );
+  const [lastProcessedBlock, setLastProcessedBlock] = useState<number | null>(null);
   const [gameEvent, setGameEvent] = useState<GameEvent | null>(null);
 
   const processNewEvents = useCallback(
@@ -19,6 +17,7 @@ export function useContractEvents<GameEvent>(boardIndex: number) {
       try {
         const rawEvents = await getEvents(provider, fromBlock, toBlock);
         console.log(`Fetching from Block ${fromBlock} to ${toBlock}`);
+        
         for (const rawEvent of rawEvents) {
           const event = {
             name: rawEvent.name,
@@ -26,11 +25,12 @@ export function useContractEvents<GameEvent>(boardIndex: number) {
             gameIndex: parseInt(rawEvent.args.gameIndex),
             data: rawEvent.args,
           };
+          
           if (event.boardIndex === boardIndex) {
             toast.success(
               `Game #${event.gameIndex} / Board #${event.boardIndex}: ${event.name}`
             );
-            setGameEvent(event);
+            setGameEvent(event as GameEvent);
           }
         }
       } catch (error) {
@@ -40,6 +40,7 @@ export function useContractEvents<GameEvent>(boardIndex: number) {
     },
     [boardIndex]
   );
+
   useEffect(() => {
     if (!blockNumber) return;
 
@@ -56,5 +57,6 @@ export function useContractEvents<GameEvent>(boardIndex: number) {
 
     processBlocks();
   }, [blockNumber, lastProcessedBlock, processNewEvents]);
+
   return { gameEvent };
 }
