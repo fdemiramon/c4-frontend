@@ -3,7 +3,7 @@ import { GRID, createGrid } from "./dimensions";
 export function transformGrid<T>(
   grid: unknown[][],
   transformer: (value: unknown) => T,
-  defaultValue: T,
+  defaultValue: T
 ): T[][] {
   if (!Array.isArray(grid)) {
     return createGrid(defaultValue);
@@ -21,7 +21,7 @@ export function transformGrid<T>(
       // Place the discs at the bottom of the column
       const startRow = GRID.ROWS - column.length;
       for (let row = 0; row < column.length; row++) {
-        transformedGrid[col][startRow + row] = column[row];
+        transformedGrid[col][startRow + row] = column[column.length - row - 1];
       }
     }
   }
@@ -33,7 +33,7 @@ export function transformDiscsGrid(grid: unknown[][]): (boolean | null)[][] {
   return transformGrid(
     grid,
     (cell) => (cell === "" ? null : Boolean(cell)),
-    null,
+    null
   );
 }
 

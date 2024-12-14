@@ -9,5 +9,5 @@ createRoot(document.getElementById("root")!).render(
     <GameStateProvider>
       <App />
     </GameStateProvider>
-  </StrictMode>,
+  </StrictMode>
 );

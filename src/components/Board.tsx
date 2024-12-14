@@ -25,7 +25,7 @@ export function Board({ boardIndex }: BoardProps) {
 
       const timer = setTimeout(() => {
         setHasNewEvent(false);
-      }, 1000);
+      }, 5000);
       return () => clearTimeout(timer);
     }
   }, [gameEvent]);
@@ -54,8 +54,8 @@ export function Board({ boardIndex }: BoardProps) {
 
   return (
     <BoardContainer hasNewEvent={hasNewEvent}>
-      <BoardHeader gameState={gameState} gameEvent={gameEvent} />
-      <div className="p-4 bg-gradient-to-b from-gray-50 to-white">
+      <BoardHeader gameState={gameState} />
+      <div className="p-4 ">
         <BoardGrid gameState={gameState} />
       </div>
     </BoardContainer>

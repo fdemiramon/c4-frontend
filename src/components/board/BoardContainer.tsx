@@ -6,9 +6,7 @@ interface BoardContainerProps {
 export function BoardContainer({ children, hasNewEvent }: BoardContainerProps) {
   return (
     <div
-      className={`bg-white rounded-lg overflow-hidden border-2 
-        ${hasNewEvent ? "border-green-500" : "border-gray-200"}
-        transition-colors duration-300 shadow-xl`}
+      className={`bg-${hasNewEvent ? "green-500" : "white"} border-4 border-indigo`}
     >
       {children}
     </div>
