@@ -54,11 +54,7 @@ export function Board({ boardIndex }: BoardProps) {
 
   return (
     <BoardContainer hasNewEvent={hasNewEvent}>
-      <BoardHeader
-        boardIndex={boardIndex}
-        gameIndex={gameState.gameIndex}
-        gameEvent={gameEvent}
-      />
+      <BoardHeader gameState={gameState} gameEvent={gameEvent} />
       <div className="p-4 bg-gradient-to-b from-gray-50 to-white">
         <BoardGrid gameState={gameState} />
       </div>
