@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { CellTooltip } from "./CellTooltip";
-import { getCellStyle } from "../../utils/cellStyles";
+import { getCellStyle } from "../../utils/styles/cellStyles";
+import type { CellValue } from "../../utils/styles/cellStyles";
 
 interface GridCellProps {
-  value: boolean | null;
+  value: CellValue;
   address: string;
   isAnimating?: boolean;
 }

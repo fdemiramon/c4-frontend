@@ -28,7 +28,11 @@ describe("GridCell", () => {
     const cell = screen.getByTestId("grid-cell");
     fireEvent.mouseEnter(cell);
 
-    expect(screen.getByText(address)).toBeInTheDocument();
+    const tooltip = screen.getByText(address);
+    expect(tooltip).toBeInTheDocument();
+
+    fireEvent.mouseLeave(cell);
+    expect(screen.queryByText(address)).not.toBeInTheDocument();
   });
 
   it("applies animation class when isAnimating is true", () => {

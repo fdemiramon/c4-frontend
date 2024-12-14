@@ -1,30 +1,30 @@
 import { Game } from "../types/contract";
+import { createGrid, isValidGridDimensions, GRID } from "./grid/dimensions";
 
 export function validateBoardData(board: Game): Game {
-  // Ensure grid dimensions are correct
-  const expectedRows = 8;
-  const expectedCols = 8;
-
-  if (
-    !Array.isArray(board.gridDiscs) ||
-    board.gridDiscs.length !== expectedRows ||
-    board.gridDiscs.some(
-      (row) => !Array.isArray(row) || row.length > expectedCols
-    )
-  ) {
-    throw new Error("GridAddresses format is corrupted");
+  if (!board) {
+    throw new Error("Invalid board data: board is undefined");
   }
-  const tempBoardGridDiscs = board.gridDiscs;
-  board.gridDiscs = Array(expectedRows)
-    .fill(null)
-    .map(() => Array(expectedCols).fill(null));
 
-  for (const row in board.gridDiscs) {
-    for (const column in board.gridDiscs[row]) {
-      if (tempBoardGridDiscs[column][row] !== undefined) {
-        board.gridDiscs[column][row] = tempBoardGridDiscs[column][row];
+  // Validate and fix grid dimensions
+  if (!isValidGridDimensions(board.gridDiscs)) {
+    const tempBoardGridDiscs = board.gridDiscs;
+    board.gridDiscs = createGrid(null);
+
+    // Preserve existing data when possible
+    if (Array.isArray(tempBoardGridDiscs)) {
+      for (let row = 0; row < GRID.ROWS; row++) {
+        for (let col = 0; col < GRID.COLS; col++) {
+          if (tempBoardGridDiscs[col]?.[row] !== undefined) {
+            board.gridDiscs[row][col] = tempBoardGridDiscs[col][row];
+          }
+        }
       }
     }
+  }
+
+  if (!isValidGridDimensions(board.gridAddresses)) {
+    board.gridAddresses = createGrid("");
   }
 
   // Ensure winners is always an array
@@ -37,5 +37,6 @@ export function validateBoardData(board: Game): Game {
   board.boardIndex = Math.max(0, Number(board.boardIndex) || 0);
   board.lastPlayedColumn = Math.max(0, Number(board.lastPlayedColumn) || 0);
   board.numberOfPlays = Math.max(0, Number(board.numberOfPlays) || 0);
+
   return board;
 }

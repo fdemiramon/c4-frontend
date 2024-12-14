@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getCellStyle } from "../../utils/cellStyles";
+import { getCellStyle } from "../../utils/styles/cellStyles";
 
 describe("getCellStyle", () => {
   it("returns correct style for empty cell", () => {

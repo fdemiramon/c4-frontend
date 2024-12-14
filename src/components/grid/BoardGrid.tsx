@@ -1,6 +1,6 @@
 import { Game } from "../../types/contract";
 import { BoardColumn } from "./BoardColumn";
-import { createEmptyGrid } from "../../utils/dataTransformers";
+import { createGrid } from "../../utils/grid/dimensions";
 
 interface BoardGridProps {
   gameState: Game | null;
@@ -29,8 +29,8 @@ export function BoardGrid({ gameState }: BoardGridProps) {
     );
   }
 
-  const columns = gameState.gridDiscs || createEmptyGrid(null);
-  const addresses = gameState.gridAddresses || createEmptyGrid("");
+  const columns = gameState.gridDiscs || createGrid(null);
+  const addresses = gameState.gridAddresses || createGrid("");
 
   return (
     <div className="bg-gradient-to-br from-blue-900 to-blue-800 p-6 rounded-xl">
