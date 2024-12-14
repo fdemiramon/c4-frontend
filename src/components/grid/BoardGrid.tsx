@@ -4,10 +4,9 @@ import { createEmptyGrid } from "../../utils/dataTransformers";
 
 interface BoardGridProps {
   gameState: Game | null;
-  lastPlayedColumn: number | null;
 }
 
-export function BoardGrid({ gameState, lastPlayedColumn }: BoardGridProps) {
+export function BoardGrid({ gameState }: BoardGridProps) {
   if (!gameState) {
     return (
       <div className="bg-gradient-to-br from-blue-900 to-blue-800 p-6 rounded-xl shadow-inner">
@@ -20,7 +19,7 @@ export function BoardGrid({ gameState, lastPlayedColumn }: BoardGridProps) {
                   .fill(null)
                   .map((_, rowIndex) => (
                     <div key={rowIndex} className="p-1.5">
-                      <div className="w-14 h-14 rounded-full border-4 border-blue-700/30 bg-gray-200 animate-pulse" />
+                      <div className="w-6 h-6 rounded-full border-4 border-blue-700/30 bg-gray-200 animate-pulse" />
                     </div>
                   ))}
               </div>
@@ -34,7 +33,7 @@ export function BoardGrid({ gameState, lastPlayedColumn }: BoardGridProps) {
   const addresses = gameState.gridAddresses || createEmptyGrid("");
 
   return (
-    <div className="bg-gradient-to-br from-blue-900 to-blue-800 p-6 rounded-xl shadow-inner">
+    <div className="bg-gradient-to-br from-blue-900 to-blue-800 p-6 rounded-xl">
       <div className="grid grid-cols-8 gap-0">
         {columns.map((column, colIndex) => (
           <BoardColumn
@@ -42,7 +41,7 @@ export function BoardGrid({ gameState, lastPlayedColumn }: BoardGridProps) {
             cells={column}
             addresses={addresses[colIndex]}
             columnIndex={colIndex}
-            isAnimating={lastPlayedColumn === colIndex}
+            isAnimating={gameState.lastPlayedColumn === colIndex}
           />
         ))}
       </div>

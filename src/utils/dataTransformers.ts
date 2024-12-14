@@ -5,7 +5,6 @@ export function transformBoardData(rawBoards: any[]): Game[] {
   if (!Array.isArray(rawBoards)) {
     throw new Error("Invalid response format from contract");
   }
-
   return rawBoards.map((board) => {
     const transformedBoard = {
       gameIndex: Number(board?.gameIndex?.toString() || "0"),
@@ -28,7 +27,7 @@ export function transformBoardData(rawBoards: any[]): Game[] {
       transformedBoard.gridDiscs = board.gridDiscs.map((row: any[]) =>
         Array.isArray(row)
           ? row.map((cell) => (cell === "" ? null : Boolean(cell)))
-          : Array(7).fill(null),
+          : Array(7).fill(null)
       );
     }
 
@@ -36,7 +35,7 @@ export function transformBoardData(rawBoards: any[]): Game[] {
       transformedBoard.gridAddresses = board.gridAddresses.map((row: any[]) =>
         Array.isArray(row)
           ? row.map((addr) => addr?.toString() || "")
-          : Array(7).fill(""),
+          : Array(7).fill("")
       );
     }
 

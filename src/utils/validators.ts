@@ -5,30 +5,26 @@ export function validateBoardData(board: Game): Game {
   const expectedRows = 8;
   const expectedCols = 8;
 
-  // Validate and fix gridDiscs if necessary
   if (
     !Array.isArray(board.gridDiscs) ||
     board.gridDiscs.length !== expectedRows ||
     board.gridDiscs.some(
-      (row) => !Array.isArray(row) || row.length !== expectedCols,
+      (row) => !Array.isArray(row) || row.length > expectedCols
     )
   ) {
-    board.gridDiscs = Array(expectedRows)
-      .fill(null)
-      .map(() => Array(expectedCols).fill(null));
+    throw new Error("GridAddresses format is corrupted");
   }
+  const tempBoardGridDiscs = board.gridDiscs;
+  board.gridDiscs = Array(expectedRows)
+    .fill(null)
+    .map(() => Array(expectedCols).fill(null));
 
-  // Validate and fix gridAddresses if necessary
-  if (
-    !Array.isArray(board.gridAddresses) ||
-    board.gridAddresses.length !== expectedRows ||
-    board.gridAddresses.some(
-      (row) => !Array.isArray(row) || row.length !== expectedCols,
-    )
-  ) {
-    board.gridAddresses = Array(expectedRows)
-      .fill(null)
-      .map(() => Array(expectedCols).fill(""));
+  for (const row in board.gridDiscs) {
+    for (const column in board.gridDiscs[row]) {
+      if (tempBoardGridDiscs[column][row] !== undefined) {
+        board.gridDiscs[column][row] = tempBoardGridDiscs[column][row];
+      }
+    }
   }
 
   // Ensure winners is always an array
@@ -41,6 +37,5 @@ export function validateBoardData(board: Game): Game {
   board.boardIndex = Math.max(0, Number(board.boardIndex) || 0);
   board.lastPlayedColumn = Math.max(0, Number(board.lastPlayedColumn) || 0);
   board.numberOfPlays = Math.max(0, Number(board.numberOfPlays) || 0);
-
   return board;
 }

@@ -18,17 +18,13 @@ export function Board({ boardIndex }: BoardProps) {
   const [hasNewEvent, setHasNewEvent] = useState(false);
   const [gameState] = useGameInitialState<Game>(boardIndex);
   const { loading, error } = useGameState();
-  const [lastPlayedColumn, setLastPlayedColumn] = useState<number | null>(null);
 
   useEffect(() => {
     if (gameEvent) {
       setHasNewEvent(true);
-      if (gameEvent.name === "GamePlayed") {
-        setLastPlayedColumn(parseInt(gameEvent.data.column.toString()));
-      }
+
       const timer = setTimeout(() => {
         setHasNewEvent(false);
-        setLastPlayedColumn(null);
       }, 1000);
       return () => clearTimeout(timer);
     }
@@ -64,11 +60,7 @@ export function Board({ boardIndex }: BoardProps) {
         gameEvent={gameEvent}
       />
       <div className="p-4 bg-gradient-to-b from-gray-50 to-white">
-        <BoardGrid
-          key={gameState?.numberOfPlays}
-          gameState={gameState}
-          lastPlayedColumn={lastPlayedColumn}
-        />
+        <BoardGrid gameState={gameState} />
       </div>
     </BoardContainer>
   );

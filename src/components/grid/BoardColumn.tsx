@@ -13,7 +13,7 @@ export function BoardColumn({
   isAnimating,
 }: BoardColumnProps) {
   return (
-    <div className="relative">
+    <div>
       <div>
         {cells.map((cell, i) => (
           <GridCell

@@ -9,7 +9,7 @@ import { GameEvent } from "../types/contract";
 export function useGameEvents(boardIndex: number) {
   const { blockNumber } = useBlockNumber();
   const [lastProcessedBlock, setLastProcessedBlock] = useState<number | null>(
-    null,
+    null
   );
   const [gameEvent, setGameEvent] = useState<GameEvent | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -52,7 +52,7 @@ export function useGameEvents(boardIndex: number) {
 
               setGameEvent(event);
               toast.success(
-                `Game #${event.gameIndex} / Board #${event.boardIndex}: ${event.name}`,
+                `Game #${event.gameIndex} / Board #${event.boardIndex}: ${event.name}`
               );
             }
           }
