@@ -18,7 +18,9 @@ export function useBlockNumber() {
         setError(null);
       } catch (err) {
         setError(
-          err instanceof Error ? err : new Error("Failed to fetch block number")
+          err instanceof Error
+            ? err
+            : new Error("Failed to fetch block number"),
         );
       }
 

@@ -17,14 +17,14 @@ export async function playDropSound() {
     oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
     oscillator.frequency.exponentialRampToValueAtTime(
       400,
-      audioContext.currentTime + 0.1
+      audioContext.currentTime + 0.1,
     );
 
     // Configure the volume envelope
     gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
     gainNode.gain.exponentialRampToValueAtTime(
       0.01,
-      audioContext.currentTime + 0.1
+      audioContext.currentTime + 0.1,
     );
 
     // Play the sound

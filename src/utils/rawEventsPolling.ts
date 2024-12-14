@@ -5,12 +5,12 @@ import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../config/contract";
 export async function getEvents(
   provider: ethers.Provider,
   fromBlock: number,
-  toBlock: number
+  toBlock: number,
 ): Promise<LogDescription[]> {
   const contract = new ethers.Contract(
     CONTRACT_ADDRESS,
     CONTRACT_ABI,
-    provider
+    provider,
   );
 
   try {
@@ -19,7 +19,7 @@ export async function getEvents(
   } catch (error) {
     console.error(
       `Failed to fetch events: for block ${fromBlock} to block ${toBlock} `,
-      error
+      error,
     );
     return [];
   }

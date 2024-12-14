@@ -1,23 +1,22 @@
-import React from "react";
-import { BoardCell } from "./BoardCell";
+import { GridCell } from "./GridCell";
 
-interface ColumnProps {
+interface BoardColumnProps {
   cells: (boolean | null)[];
   addresses: string[];
   columnIndex: number;
   isAnimating: boolean;
 }
 
-export const BoardColumn: React.FC<ColumnProps> = ({
+export function BoardColumn({
   cells,
   addresses,
   isAnimating,
-}) => {
+}: BoardColumnProps) {
   return (
     <div className="relative">
       <div>
         {cells.map((cell, i) => (
-          <BoardCell
+          <GridCell
             key={i}
             value={cell}
             address={addresses[i]}
@@ -27,4 +26,4 @@ export const BoardColumn: React.FC<ColumnProps> = ({
       </div>
     </div>
   );
-};
+}

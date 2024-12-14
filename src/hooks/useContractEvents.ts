@@ -10,7 +10,7 @@ const provider = createProvider();
 export function useContractEvents<GameEvent>(boardIndex: number) {
   const { blockNumber } = useBlockNumber();
   const [lastProcessedBlock, setLastProcessedBlock] = useState<number | null>(
-    null
+    null,
   );
   const [gameEvent, setGameEvent] = useState<GameEvent | null>(null);
 
@@ -30,7 +30,7 @@ export function useContractEvents<GameEvent>(boardIndex: number) {
 
           if (event.boardIndex === boardIndex) {
             toast.success(
-              `Game #${event.gameIndex} / Board #${event.boardIndex}: ${event.name}`
+              `Game #${event.gameIndex} / Board #${event.boardIndex}: ${event.name}`,
             );
             setGameEvent(event as GameEvent);
           }
@@ -40,7 +40,7 @@ export function useContractEvents<GameEvent>(boardIndex: number) {
         toast.error("Failed to fetch new events");
       }
     },
-    [boardIndex]
+    [boardIndex],
   );
 
   useEffect(() => {

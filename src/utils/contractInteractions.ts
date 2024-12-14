@@ -9,7 +9,7 @@ export async function fetchAllBoards(): Promise<Game[]> {
   const contract = new ethers.Contract(
     CONTRACT_ADDRESS,
     CONTRACT_ABI,
-    provider
+    provider,
   );
 
   try {

@@ -1,10 +1,13 @@
-import { GamepadIcon, Trophy } from "lucide-react";
 import { useGameEvents } from "../hooks/useGameEvents";
 import { useGameInitialState } from "../hooks/useGameInitialState";
 import { useEffect, useState } from "react";
 import { Game } from "../types/contract";
-import { BoardGrid } from "./BoardGrid";
+import { BoardGrid } from "./grid/BoardGrid";
 import { useGameState } from "../context/GameStateContext";
+import { BoardHeader } from "./board/BoardHeader";
+import { BoardError } from "./board/BoardError";
+import { BoardLoading } from "./board/BoardLoading";
+import { BoardContainer } from "./board/BoardContainer";
 
 interface BoardProps {
   boardIndex: number;
@@ -33,66 +36,40 @@ export function Board({ boardIndex }: BoardProps) {
 
   if (error) {
     return (
-      <div className="bg-white rounded-lg p-4 border-2 border-red-500">
-        <p className="text-red-500">Error loading board: {error.message}</p>
-      </div>
+      <BoardError
+        message={`Error loading board: ${error.message}`}
+        type="error"
+      />
     );
   }
 
   if (isLoading || loading) {
-    return (
-      <div className="bg-white rounded-lg p-4">
-        <div className="animate-pulse">
-          <div className="h-8 bg-gray-200 rounded w-1/3 mb-4"></div>
-          <div className="h-64 bg-gray-200 rounded"></div>
-        </div>
-      </div>
-    );
+    return <BoardLoading />;
   }
 
   if (!gameState) {
     return (
-      <div className="bg-white rounded-lg p-4 border-2 border-yellow-500">
-        <p className="text-yellow-500">
-          No game data available for Board #{boardIndex}
-        </p>
-      </div>
+      <BoardError
+        message={`No game data available for Board #${boardIndex}`}
+        type="warning"
+      />
     );
   }
 
   return (
-    <div
-      className={`bg-white rounded-t-lg overflow-hidden border-2 ${
-        hasNewEvent ? "border-green-500" : "border-gray-200"
-      } transition-colors duration-300`}
-    >
-      <div className="bg-indigo-600 p-4 rounded-t-lg text-white">
-        <div className="flex justify-between items-center mb-2">
-          <h2 className="text-lg font-semibold flex items-center gap-2">
-            <GamepadIcon className="w-5 h-5" />
-            Board #{boardIndex}
-          </h2>
-          <span className="font-semibold">
-            Game #{gameState?.gameIndex ?? "N/A"}
-          </span>
-        </div>
-        <div className="flex items-center gap-2 bg-indigo-500/30 p-2">
-          <Trophy size={16} className="text-yellow-300" />
-          <span className="text-sm font-medium">Jackpot: 1.0344 ETH</span>
-          <span className="text-sm font-medium">
-            {`LATEST EVENT: ${gameEvent?.name ?? "None"}`}
-          </span>
-        </div>
+    <BoardContainer hasNewEvent={hasNewEvent}>
+      <BoardHeader
+        boardIndex={boardIndex}
+        gameIndex={gameState.gameIndex}
+        gameEvent={gameEvent}
+      />
+      <div className="p-4 bg-gradient-to-b from-gray-50 to-white">
+        <BoardGrid
+          key={gameState?.numberOfPlays}
+          gameState={gameState}
+          lastPlayedColumn={lastPlayedColumn}
+        />
       </div>
-      <div className="space-y-4">
-        <div className="bg-white rounded-lg shadow p-4">
-          <BoardGrid
-            key={gameState?.numberOfPlays}
-            gameState={gameState}
-            lastPlayedColumn={lastPlayedColumn}
-          />
-        </div>
-      </div>
-    </div>
+    </BoardContainer>
   );
 }

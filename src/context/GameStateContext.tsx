@@ -17,7 +17,7 @@ interface GameStateContextType {
 }
 
 const GameStateContext = createContext<GameStateContextType | undefined>(
-  undefined
+  undefined,
 );
 
 export function GameStateProvider({ children }: { children: React.ReactNode }) {

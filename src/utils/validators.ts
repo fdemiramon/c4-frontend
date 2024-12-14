@@ -10,12 +10,12 @@ export function validateBoardData(board: Game): Game {
     !Array.isArray(board.gridDiscs) ||
     board.gridDiscs.length !== expectedRows ||
     board.gridDiscs.some(
-      (row) => !Array.isArray(row) || row.length !== expectedCols
+      (row) => !Array.isArray(row) || row.length !== expectedCols,
     )
   ) {
     board.gridDiscs = Array(expectedRows)
       .fill(null)
-      .map(() => Array(expectedCols).fill(false));
+      .map(() => Array(expectedCols).fill(null));
   }
 
   // Validate and fix gridAddresses if necessary
@@ -23,7 +23,7 @@ export function validateBoardData(board: Game): Game {
     !Array.isArray(board.gridAddresses) ||
     board.gridAddresses.length !== expectedRows ||
     board.gridAddresses.some(
-      (row) => !Array.isArray(row) || row.length !== expectedCols
+      (row) => !Array.isArray(row) || row.length !== expectedCols,
     )
   ) {
     board.gridAddresses = Array(expectedRows)

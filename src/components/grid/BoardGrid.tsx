@@ -1,17 +1,13 @@
-import React from "react";
-import { Game } from "../types/contract";
+import { Game } from "../../types/contract";
 import { BoardColumn } from "./BoardColumn";
-import { createEmptyGrid } from "../utils/dataTransformers";
+import { createEmptyGrid } from "../../utils/dataTransformers";
 
 interface BoardGridProps {
   gameState: Game | null;
   lastPlayedColumn: number | null;
 }
 
-export const BoardGrid: React.FC<BoardGridProps> = ({
-  gameState,
-  lastPlayedColumn,
-}) => {
+export function BoardGrid({ gameState, lastPlayedColumn }: BoardGridProps) {
   if (!gameState) {
     return (
       <div className="bg-gradient-to-br from-blue-900 to-blue-800 p-6 rounded-xl shadow-inner">
@@ -44,7 +40,7 @@ export const BoardGrid: React.FC<BoardGridProps> = ({
           <BoardColumn
             key={colIndex}
             cells={column}
-            addresses={addresses.map((row) => row[colIndex] || "")}
+            addresses={addresses[colIndex]}
             columnIndex={colIndex}
             isAnimating={lastPlayedColumn === colIndex}
           />
@@ -52,4 +48,4 @@ export const BoardGrid: React.FC<BoardGridProps> = ({
       </div>
     </div>
   );
-};
+}

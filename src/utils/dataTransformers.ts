@@ -15,7 +15,7 @@ export function transformBoardData(rawBoards: any[]): Game[] {
       lastColor: Boolean(board?.lastColor),
       isClosed: Boolean(board?.isClosed),
       winners: [],
-      gridDiscs: createEmptyGrid(false),
+      gridDiscs: createEmptyGrid(null),
       gridAddresses: createEmptyGrid(""),
     };
 
@@ -27,8 +27,8 @@ export function transformBoardData(rawBoards: any[]): Game[] {
     if (Array.isArray(board?.gridDiscs)) {
       transformedBoard.gridDiscs = board.gridDiscs.map((row: any[]) =>
         Array.isArray(row)
-          ? row.map((cell) => Boolean(cell))
-          : Array(7).fill(false)
+          ? row.map((cell) => (cell === "" ? null : Boolean(cell)))
+          : Array(7).fill(null),
       );
     }
 
@@ -36,7 +36,7 @@ export function transformBoardData(rawBoards: any[]): Game[] {
       transformedBoard.gridAddresses = board.gridAddresses.map((row: any[]) =>
         Array.isArray(row)
           ? row.map((addr) => addr?.toString() || "")
-          : Array(7).fill("")
+          : Array(7).fill(""),
       );
     }
 
