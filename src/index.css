@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom animations */
 @keyframes fall {
   0% {
     transform: translateY(-400%);
@@ -19,6 +20,55 @@
   }
 }
 
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px #6366f1, 0 0 10px #6366f1, 0 0 15px #6366f1;
+  }
+  50% {
+    box-shadow: 0 0 10px #6366f1, 0 0 20px #6366f1, 0 0 30px #6366f1;
+  }
+}
+
+@keyframes pulse-border {
+  0%, 100% {
+    border-color: rgba(99, 102, 241, 0.5);
+  }
+  50% {
+    border-color: rgba(99, 102, 241, 1);
+  }
+}
+
 .animate-fall {
   animation: fall 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.animate-glow {
+  animation: glow 2s infinite;
+}
+
+.animate-pulse-border {
+  animation: pulse-border 2s infinite;
+}
+
+/* Custom styles */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.game-gradient {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+}
+
+.header-gradient {
+  background: linear-gradient(90deg, #4f46e5 0%, #6366f1 100%);
+}
+
+.hero-gradient {
+  background: linear-gradient(135deg, #312e81 0%, #4338ca 50%, #6366f1 100%);
+}
+
+.board-gradient {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
 }

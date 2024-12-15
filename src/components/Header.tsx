@@ -3,32 +3,34 @@ import { WalletButton } from "./WalletButton";
 
 export function Header() {
   return (
-    <header className="bg-indigo-600 text-white py-4">
+    <header className="header-gradient text-white py-4 shadow-lg">
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Gamepad2 size={32} />
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-white/10 rounded-lg">
+            <Gamepad2 size={32} className="text-white" />
+          </div>
           <h1 className="text-2xl font-bold">Connect4 Arena</h1>
         </div>
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-8">
           <nav>
-            <ul className="flex gap-6">
+            <ul className="flex gap-8">
               <li>
-                <a href="#" className="hover:text-indigo-200">
+                <a href="#" className="hover:text-indigo-200 transition-colors">
                   Home
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-indigo-200">
+                <a href="#" className="hover:text-indigo-200 transition-colors">
                   Leaderboard
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-indigo-200">
-                  Past games
+                <a href="#" className="hover:text-indigo-200 transition-colors">
+                  Past Games
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-indigo-200">
+                <a href="#" className="hover:text-indigo-200 transition-colors">
                   About
                 </a>
               </li>
