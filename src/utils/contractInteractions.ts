@@ -1,15 +1,19 @@
 import { ethers } from "ethers";
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from "../config/contract";
-import { createProvider } from "../config/provider";
 import { Game } from "../types/contract";
 import { transformBoardData } from "./dataTransformers";
+import { getWalletClient } from "wagmi/actions";
 
 export async function fetchAllBoards(): Promise<Game[]> {
-  const provider = createProvider();
+  const walletClient = await getWalletClient();
+  if (!walletClient) {
+    throw new Error("No wallet connected");
+  }
+
   const contract = new ethers.Contract(
     CONTRACT_ADDRESS,
     CONTRACT_ABI,
-    provider,
+    walletClient
   );
 
   try {
