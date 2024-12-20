@@ -10,11 +10,7 @@ export async function fetchAllBoards(): Promise<Game[]> {
     throw new Error("No wallet connected");
   }
 
-  const contract = new ethers.Contract(
-    CONTRACT_ADDRESS,
-    CONTRACT_ABI,
-    walletClient
-  );
+  const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI);
 
   try {
     const boards = await contract.allBoards();

@@ -17,7 +17,7 @@ interface GameStateContextType {
 }
 
 const GameStateContext = createContext<GameStateContextType | undefined>(
-  undefined,
+  undefined
 );
 
 export function GameStateProvider({ children }: { children: React.ReactNode }) {
@@ -34,6 +34,7 @@ export function GameStateProvider({ children }: { children: React.ReactNode }) {
     } catch (err) {
       const error =
         err instanceof Error ? err : new Error("Failed to fetch games");
+
       setError(error);
       toast.error(error.message);
     } finally {

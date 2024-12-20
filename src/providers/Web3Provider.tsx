@@ -1,15 +1,24 @@
-import { RainbowKitProvider, getDefaultConfig } from '@rainbow-me/rainbowkit';
-import { WagmiProvider, useConfig } from 'wagmi';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import '@rainbow-me/rainbowkit/styles.css';
-import { SUPPORTED_NETWORKS } from '../config/networks';
-import { createContext, useContext, useEffect, useState } from 'react';
-import { toast } from 'react-hot-toast';
+import { RainbowKitProvider, getDefaultConfig } from "@rainbow-me/rainbowkit";
+import { WagmiProvider, useConfig, http } from "wagmi";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import "@rainbow-me/rainbowkit/styles.css";
+import { SUPPORTED_NETWORKS } from "../config/chains";
+import { createContext, useContext, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
-const config = getDefaultConfig({
-  appName: 'Connect4 Arena',
-  projectId: 'connect4-arena',
+// Create a wagmi config
+export const config = getDefaultConfig({
+  appName: "Connect4 Arena",
+  projectId: "YOUR_PROJECT_ID", // You can use any string here for local development
   chains: Object.values(SUPPORTED_NETWORKS),
+  transports: {
+    [SUPPORTED_NETWORKS.anvil.id]: http(
+      SUPPORTED_NETWORKS.anvil.rpcUrls.default.http[0]
+    ),
+    [SUPPORTED_NETWORKS.sepolia.id]: http(
+      SUPPORTED_NETWORKS.sepolia.rpcUrls.default.http[0]
+    ),
+  },
   ssr: false,
 });
 
@@ -34,7 +43,7 @@ function Web3StateProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const unsubscribe = wagmiConfig.subscribe(
-      (state) => state.status === 'connected',
+      (state) => state.status === "connected",
       (isConnected) => {
         setIsWalletConnected(isConnected);
       }
@@ -54,7 +63,7 @@ function Web3StateProvider({ children }: { children: React.ReactNode }) {
 
         if (chainId && !isSupported) {
           toast.error(
-            'Unsupported network detected. Please switch to Sepolia or Remote Anvil.'
+            "Unsupported network detected. Please switch to Sepolia or Remote Anvil."
           );
         }
       }
